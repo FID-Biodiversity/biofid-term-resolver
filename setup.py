@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 requirements = [
     'SPARQLWrapper'
@@ -16,7 +16,7 @@ setup(
     url="https://www.biofid.de",
     download_url='https://github.com/FID-Biodiversity/biofid-term-resolver',
     python_requires='>=3.8',
-    packages=['term_resolver'],
+    packages=find_packages(),
     install_requires=requirements,
     extras_require={
         'dev': [
