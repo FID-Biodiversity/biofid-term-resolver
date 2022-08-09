@@ -1,0 +1,14 @@
+<https://www.biofid.de/ontology/fagus_sylvatica> <https://dwc.tdwg.org/terms/#parentNameUsageID> <https://www.biofid.de/ontology/fagus> .
+<https://www.biofid.de/ontology/fagus> <http://www.w3.org/2000/01/rdf-schema#label> "Fagus"^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/fagus> <https://dwc.tdwg.org/terms/#scientificName> "Fagus L."^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/fagus_sylvatica> <http://www.w3.org/2000/01/rdf-schema#label> "Fagus sylvatica"^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/fagus_sylvatica> <https://dwc.tdwg.org/terms/#scientificName> "Fagus sylvatica L."^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/fagus_sylvatica_sylvatica> <https://dwc.tdwg.org/terms/#parentNameUsageID> <https://www.biofid.de/ontology/fagus_sylvatica> .
+<https://www.biofid.de/ontology/fagus_sylvatica_sylvatica> <https://dwc.tdwg.org/terms/#genus> <https://www.biofid.de/ontology/fagus> .
+<https://www.biofid.de/ontology/fagus_sylvatica_sylvatica> <http://www.w3.org/2000/01/rdf-schema#label> "Fagus sylvatica sylvatica"^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/fagus_sylvatica_sylvatica> <https://dwc.tdwg.org/terms/#scientificName> "Fagus sylvatica subsp. sylvatica"^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/fagus_non_sylvatica> <http://www.w3.org/2000/01/rdf-schema#label> "Fagus synonymus"^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/fagus_non_sylvatica> <https://dwc.tdwg.org/terms/#scientificName> "Fagus synonymus L."^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/fagus_non_sylvatica> <https://dwc.tdwg.org/terms/#acceptedNameUsageID> <https://www.biofid.de/ontology/fagus_sylvatica> .
+<https://www.biofid.de/ontology/fagus_non_sylvatica> <https://dwc.tdwg.org/terms/#genus> <https://www.biofid.de/ontology/fagus> .
+<https://www.biofid.de/ontology/quercus> <https://dwc.tdwg.org/terms/#scientificName> "Quercus L."^^<http://www.w3.org/2001/XMLSchema#string> .
