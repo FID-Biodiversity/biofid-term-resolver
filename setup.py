@@ -6,7 +6,7 @@ requirements = [
 
 setup(
     name='biofid-term-resolver',
-    version='0.1.0',
+    version='0.1.1',
     description='Allows the resolution of terms to their respective URI.',
     license="AGPLv3",
     long_description='',
@@ -16,7 +16,7 @@ setup(
     url="https://www.biofid.de",
     download_url='https://github.com/FID-Biodiversity/biofid-term-resolver',
     python_requires='>=3.8',
-    packages=find_packages(),
+    packages=find_packages(where='./term_resolver'),
     install_requires=requirements,
     extras_require={
         'dev': [
