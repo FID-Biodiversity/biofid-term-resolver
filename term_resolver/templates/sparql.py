@@ -1,6 +1,6 @@
 from typing import List, Any
 
-from term_resolver.commons import SearchParameters
+from term_resolver.commons import SearchParameters, Filter
 
 namespaces = {
     "terms": "https://dwc.tdwg.org/terms/#",
@@ -20,7 +20,7 @@ systematics_values = [
 ]
 
 filter_translations = {
-    "isInCorpus": "https://www.biofid.de/bio-ontologies#is_in_corpus"
+    Filter.is_in_corpus.value: "https://www.biofid.de/bio-ontologies#is_in_corpus"
 }
 
 TERM_VARIABLE_STRING = "?term"

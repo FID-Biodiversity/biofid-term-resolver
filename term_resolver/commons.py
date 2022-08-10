@@ -1,5 +1,11 @@
 from dataclasses import dataclass, field
 from typing import Union, List
+from enum import Enum
+
+
+class Filter(Enum):
+    """ A list of filters that can be applied to the TermResolver. """
+    is_in_corpus = 'isInCorpus'
 
 
 @dataclass
