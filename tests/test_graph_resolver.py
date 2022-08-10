@@ -12,41 +12,55 @@ class TestGraphDatabaseTermResolver:
     @pytest.mark.parametrize(
         ["search_parameters", "expected_uris_per_term"],
         [
-            (
+            (  # Scenario - Single genus with all children
                 {"terms": ["Fagus"], "recursive": True, "limit": 10},
                 {
                     "Fagus": [
                         "https://www.biofid.de/ontology/fagus",
-                        "https://www.biofid.de/ontology/fagus_sylvatica_sylvatica",
                         "https://www.biofid.de/ontology/fagus_non_sylvatica",
                         "https://www.biofid.de/ontology/fagus_sylvatica",
+                        "https://www.biofid.de/ontology/fagus_sylvatica_sylvatica",
                     ]
                 },
             ),
-            (
+            (  # Scenario - Single species with all children
                 {"terms": ["Fagus sylvatica"], "recursive": True, "limit": 10},
                 {
                     "Fagus sylvatica": [
                         "https://www.biofid.de/ontology/fagus_sylvatica",
-                        "https://www.biofid.de/ontology/fagus_sylvatica_sylvatica",
                         "https://www.biofid.de/ontology/fagus_non_sylvatica",
+                        "https://www.biofid.de/ontology/fagus_sylvatica_sylvatica",
                     ]
                 },
             ),
-            (
+            (  # Scenario - Single term without any children
                 {"terms": ["Fagus"], "recursive": False, "limit": 10},
                 {"Fagus": ["https://www.biofid.de/ontology/fagus"]},
             ),
-            (
+            (  # Scenario - Multiple terms with their children
                 {"terms": ["Fagus", "Quercus L."], "recursive": True, "limit": 10},
                 {
                     "Fagus": [
                         "https://www.biofid.de/ontology/fagus",
-                        "https://www.biofid.de/ontology/fagus_sylvatica_sylvatica",
                         "https://www.biofid.de/ontology/fagus_non_sylvatica",
                         "https://www.biofid.de/ontology/fagus_sylvatica",
+                        "https://www.biofid.de/ontology/fagus_sylvatica_sylvatica",
                     ],
                     "Quercus L.": ["https://www.biofid.de/ontology/quercus"],
+                },
+            ),
+            (  # Scenario - Filter for present URIs
+                {
+                    "terms": ["Ulmus L."],
+                    "limit": 10,
+                    "recursive": True,
+                    "isInCorpus": True,
+                },
+                {
+                    "Ulmus L.": [
+                        "https://www.biofid.de/ontology/ulmus",
+                        "https://www.biofid.de/ontology/ulmus_glabra_sub",
+                    ]
                 },
             ),
         ],
@@ -59,7 +73,7 @@ class TestGraphDatabaseTermResolver:
         expected_uris_per_term,
     ):
         uris_per_term = resolver.get_uris_for_terms(search_parameters)
-        assert_equal_dicts(uris_per_term, expected_uris_per_term)
+        assert uris_per_term == expected_uris_per_term
 
     @pytest.mark.parametrize(
         ["search_parameters", "expected_number_of_uris"],
@@ -77,13 +91,14 @@ class TestGraphDatabaseTermResolver:
     @pytest.mark.parametrize(
         ["search_parameters", "expected_number_of_uris"],
         [
-            ({"terms": ["Fagus"], "recursive": True, "limit": 3, 'page': 1}, 3),
-            ({"terms": ["Fagus"], "recursive": True, "limit": 3, 'page': 2}, 1),
+            ({"terms": ["Fagus"], "recursive": True, "limit": 3, "page": 1}, 3),
+            ({"terms": ["Fagus"], "recursive": True, "limit": 3, "page": 2}, 1),
+            ({"terms": ["Fagus"], "recursive": True, "limit": 3, "page": 3}, 0),
         ],
         indirect=["search_parameters"],
     )
-    def test_term_resolving_limit(
-            self, resolver, search_parameters: SearchParameters, expected_number_of_uris
+    def test_term_paging(
+        self, resolver, search_parameters: SearchParameters, expected_number_of_uris
     ):
         uris_per_term = resolver.get_uris_for_terms(search_parameters)
         assert len(uris_per_term["Fagus"]) == expected_number_of_uris
@@ -96,18 +111,17 @@ class TestGraphDatabaseTermResolver:
 
     @pytest.fixture
     def search_parameters(self, request):
-        return SearchParameters(**request.param)
+        data = dict(request.param)
+
+        if "isInCorpus" in data:
+            data.setdefault("filters", {})["isInCorpus"] = data["isInCorpus"]
+            del data["isInCorpus"]
+
+        return SearchParameters(**data)
 
     @pytest.fixture
     def rdf_data_file_path(self, resources_directory_path):
         return resources_directory_path / "rdf/mock-plant-ontology.nt"
-
-
-def assert_equal_dicts(dict1: dict, dict2: dict) -> None:
-    assert set(dict1.keys()) == set(dict2.keys())
-
-    for key in dict1.keys():
-        assert set(dict1[key]) == set(dict2[key])
 
 
 class RequestMockedGraphDatabaseTermResolver(GraphDatabaseTermResolver):

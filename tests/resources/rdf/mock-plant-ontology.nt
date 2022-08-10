@@ -12,3 +12,11 @@
 <https://www.biofid.de/ontology/fagus_non_sylvatica> <https://dwc.tdwg.org/terms/#acceptedNameUsageID> <https://www.biofid.de/ontology/fagus_sylvatica> .
 <https://www.biofid.de/ontology/fagus_non_sylvatica> <https://dwc.tdwg.org/terms/#genus> <https://www.biofid.de/ontology/fagus> .
 <https://www.biofid.de/ontology/quercus> <https://dwc.tdwg.org/terms/#scientificName> "Quercus L."^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/ulmus> <https://dwc.tdwg.org/terms/#scientificName> "Ulmus L."^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/ulmus> <https://www.biofid.de/bio-ontologies#is_in_corpus> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://www.biofid.de/ontology/ulmus_glabra> <https://dwc.tdwg.org/terms/#scientificName> "Ulmus glabra"^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/ulmus_glabra> <https://dwc.tdwg.org/terms/#parentNameUsageID> <https://www.biofid.de/ontology/ulmus> .
+<https://www.biofid.de/ontology/ulmus_glabra_sub> <https://dwc.tdwg.org/terms/#scientificName> "Ulmus glabra sub"^^<http://www.w3.org/2001/XMLSchema#string> .
+<https://www.biofid.de/ontology/ulmus_glabra_sub> <https://www.biofid.de/bio-ontologies#is_in_corpus> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<https://www.biofid.de/ontology/ulmus_glabra_sub> <https://dwc.tdwg.org/terms/#parentNameUsageID> <https://www.biofid.de/ontology/ulmus_glabra> .
+<https://www.biofid.de/ontology/ulmus_glabra_sub> <https://dwc.tdwg.org/terms/#genus> <https://www.biofid.de/ontology/ulmus> .

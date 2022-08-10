@@ -37,6 +37,7 @@ class GraphDatabaseTermResolver:
     ) -> Dict[str, List[str]]:
         """Returns the URIs for the given SearchParameters.
         If there is no corresponding URI, the list is empty.
+        All terms in the search parameters have to be sanitized for usage in a SPARQL query!
         """
         sparql_query = sparql.compile_term_to_uri_query_from_search_parameters(
             search_parameters
@@ -47,20 +48,39 @@ class GraphDatabaseTermResolver:
         response_data = self._extract_uris_from_response(bindings)
 
         if search_parameters.recursive:
-            # Iterate only over the respective URI lists of each term
-            for parent_uris in response_data.values():
-                children_limit = max(search_parameters.limit - len(parent_uris), 0)
-                children_term_to_uri_data = self.get_children_uris_and_terms(
-                    parent_uris, max_number_of_results=children_limit, page=search_parameters.page
-                )
-                parent_uris.extend(children_term_to_uri_data)
+            self.add_children_uris_to_data(response_data, search_parameters)
 
         return response_data
 
+    def add_children_uris_to_data(
+        self,
+        data: dict,
+        search_parameters: SearchParameters,
+    ) -> None:
+        # Iterate only over the respective URI lists of each term
+        for parent_uris in data.values():
+            children_limit = max(search_parameters.limit - len(parent_uris), 0)
+
+            children_term_to_uri_data = self.get_children_uris_and_terms(
+                parent_uris,
+                max_number_of_results=children_limit,
+                search_parameters=search_parameters,
+            )
+
+            if search_parameters.page > 1:
+                parent_uris.clear()  # Do not repeat parent URIs on later pages
+
+            parent_uris.extend(children_term_to_uri_data)
+
     def get_children_uris_and_terms(
-        self, parent_uris: List[str], max_number_of_results: int, page: int
+        self,
+        parent_uris: List[str],
+        max_number_of_results: int,
+        search_parameters: SearchParameters,
     ) -> List[str]:
-        children_sparql_query = sparql.compile_uri_children_query(parent_uris, max_number_of_results, page)
+        children_sparql_query = sparql.compile_uri_children_query(
+            parent_uris, max_number_of_results, search_parameters
+        )
         graph_response = self._query(children_sparql_query)
         bindings = get_bindings(graph_response)
         return [get_value(row, self.URI_VARIABLE_STRING) for row in bindings]

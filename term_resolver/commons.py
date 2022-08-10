@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Union, List
 
 
@@ -10,3 +10,4 @@ class SearchParameters:
     recursive: bool  # Whether to look up child URIs (True) or not (False)
     limit: int  # The maximum number of URIs to return
     page: int = 1  # The current page, if necessary
+    filters: dict = field(default_factory=dict)
