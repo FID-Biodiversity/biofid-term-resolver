@@ -16,7 +16,7 @@ setup(
     url="https://www.biofid.de",
     download_url='https://github.com/FID-Biodiversity/biofid-term-resolver',
     python_requires='>=3.8',
-    packages=find_packages(where='./term_resolver'),
+    packages=find_packages(exclude='tests'),
     install_requires=requirements,
     extras_require={
         'dev': [
