@@ -63,6 +63,21 @@ class TestGraphDatabaseTermResolver:
                     ]
                 },
             ),
+            (  # Scenario - Filter for present URIs is disabled but given
+                {
+                    "terms": ["Ulmus L."],
+                    "limit": 10,
+                    "recursive": True,
+                    "isInCorpus": False,
+                },
+                {
+                    "Ulmus L.": [
+                        "https://www.biofid.de/ontology/ulmus",
+                        "https://www.biofid.de/ontology/ulmus_glabra",
+                        "https://www.biofid.de/ontology/ulmus_glabra_sub"
+                    ]
+                },
+            ),
         ],
         indirect=["search_parameters"],
     )

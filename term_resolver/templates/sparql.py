@@ -30,7 +30,7 @@ order_by_statement = f"ORDER BY {URI_VARIABLE_STRING}"
 
 
 def compile_term_to_uri_query_from_search_parameters(
-    search_parameters: SearchParameters,
+        search_parameters: SearchParameters,
 ) -> str:
     terms = search_parameters.terms
 
@@ -67,7 +67,7 @@ def compile_term_to_uri_query_from_search_parameters(
 
 
 def compile_uri_children_query(
-    uris: List[str], max_number_of_results: int, search_parameters: SearchParameters
+        uris: List[str], max_number_of_results: int, search_parameters: SearchParameters
 ) -> str:
     systematics_variable_string = "?isPartOfSystematics"
     parent_uris_variable_string = "?parents"
@@ -87,8 +87,11 @@ def compile_uri_children_query(
     )
 
     filter_statements = [
-        f"{URI_VARIABLE_STRING} {wrap_uri_in_brackets(filter_translations[filter_name])} {value_to_sparql(filter_value)} ."
+        f"{URI_VARIABLE_STRING} " \
+        f"{wrap_uri_in_brackets(filter_translations[filter_name])} " \
+        f"{value_to_sparql(filter_value)} ."
         for filter_name, filter_value in search_parameters.filters.items()
+        if filter_value
     ]
 
     sparql_statements = [
